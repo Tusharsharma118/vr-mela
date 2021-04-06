@@ -22,8 +22,6 @@ namespace JMRSDK.Toolkit.UI
         [SerializeField]
         private GameObject alphabets, special_characters;
         [SerializeField]
-        private Button searchBtn;
-        [SerializeField]
         private LookAtConstraint lookAt;
         #endregion
 

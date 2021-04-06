@@ -19,6 +19,11 @@ TagManager:
   - SurfaceTextLayer
   - SecondryLayer
   - MenuButton
+  - RewardNamePlate
+  - TicketCounter
+  - GameStats
+  - GameManager
+  - BankruptAlertView
   layers:
   - Default
   - TransparentFX

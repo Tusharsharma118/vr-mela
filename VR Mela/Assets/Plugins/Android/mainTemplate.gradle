@@ -13,7 +13,6 @@ implementation 'com.squareup.okhttp3:okhttp:3.14.1'
 //implementation(group: 'com.jiotesseract.mr.sdk', name: 'tmrServicesSDK', version: '4.2.14')
 implementation "androidx.preference:preference-ktx:1.1.1"
 implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
-implementation 'in.tesseract.mediaPlayer:mediaPlayerSDK:1.2.14'
 implementation 'com.jakewharton.timber:timber:4.7.1'
 **DEPS**}
 

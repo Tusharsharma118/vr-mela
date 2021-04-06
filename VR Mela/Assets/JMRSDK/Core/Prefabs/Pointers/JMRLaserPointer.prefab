@@ -121,7 +121,7 @@ MonoBehaviour:
   WidthOffset: 0
   RotationOffset: 0
   NumLineSteps: 10
-  LineMaterial: {fileID: 2100000, guid: f176558779ce1124f954be17d976cce3, type: 2}
+  LineMaterial: {fileID: 2100000, guid: c83ab635e8044fc489429f79e0665f0b, type: 2}
   RoundedEdges: 1
   RoundedCaps: 1
   lineRenderer: {fileID: 0}
