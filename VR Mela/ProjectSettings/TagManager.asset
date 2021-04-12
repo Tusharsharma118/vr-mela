@@ -24,6 +24,7 @@ TagManager:
   - GameStats
   - GameManager
   - BankruptAlertView
+  - RewardCarousel
   layers:
   - Default
   - TransparentFX

@@ -927,7 +927,7 @@ GameObject:
   - component: {fileID: 128519592}
   m_Layer: 0
   m_Name: RewardCarousel
-  m_TagString: Untagged
+  m_TagString: RewardCarousel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -952,11 +952,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06806a029e443434a84cb7137c2b11f2, type: 2}
   - {fileID: 11400000, guid: aae699e9586304d4ca1d472bc401b7c5, type: 2}
   - {fileID: 11400000, guid: 3187c7790c175cb43b758be6573e7758, type: 2}
-  - {fileID: 11400000, guid: 3187c7790c175cb43b758be6573e7758, type: 2}
   ResetCenterRotation: 1
   DistanceFromCenter: 3
   AssumeObject: 1
-  ChosenObject: 0
+  ChosenObject: 1
   speedOfrotation: 0.1
 --- !u!4 &128519593
 Transform:

@@ -101,7 +101,6 @@ public class Carousel : MonoBehaviour
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///adding in code to display name and price of selected object
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GamesManager>().LoadGame();
         updatePricePlate();
         populateTicketsInScene();
         
@@ -208,11 +207,12 @@ public class Carousel : MonoBehaviour
         {
             gameStats.decrementPlayerTickets((float)rewards[ChosenObject].cost);
             //mark object as bought and save it somehow that its bought then update the rewards array
-
+            rewards[ChosenObject].isBought = true;
+            gameStats.addRewardtoOwned(rewards[ChosenObject].getId());
 
             //update scene ticket counter
             populateTicketsInScene();
-            //save current ticket count to device storage
+            //save current ticket count and Object Stats to device storage
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<GamesManager>().SaveGame();
         }
         else {

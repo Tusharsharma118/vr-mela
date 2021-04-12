@@ -10,4 +10,9 @@ public class Reward : ScriptableObject
     public new string name;
     public bool isBought;
 
+
+    public string getId()
+    {
+        return this.name;
+    }
 }
