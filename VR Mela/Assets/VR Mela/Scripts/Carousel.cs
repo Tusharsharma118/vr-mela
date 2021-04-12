@@ -202,14 +202,14 @@ public class Carousel : MonoBehaviour
 
     //deduct tickets when buying something
     public void onBuy() {
-
+        Debug.Log("Tickets before Buying " + gameStats.getPlayerTickets().ToString());
         if (gameStats.getPlayerTickets() >= rewards[ChosenObject].cost)
         {
-            gameStats.decrementPlayerTickets((float)rewards[ChosenObject].cost);
+            gameStats.decrementPlayerTickets((int)rewards[ChosenObject].cost);
             //mark object as bought and save it somehow that its bought then update the rewards array
             rewards[ChosenObject].isBought = true;
             gameStats.addRewardtoOwned(rewards[ChosenObject].getId());
-
+            Debug.Log("Tickets after Buying " + gameStats.getPlayerTickets().ToString());
             //update scene ticket counter
             populateTicketsInScene();
             //save current ticket count and Object Stats to device storage

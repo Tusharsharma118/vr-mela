@@ -4983,7 +4983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb6daef05213fc449a6a855cfe0bb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTickets: 40
+  playerTickets: 1900
+  rewardsCarousel: {fileID: 128519591}
 --- !u!4 &1020920854
 Transform:
   m_ObjectHideFlags: 0
@@ -5748,6 +5749,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStats: {fileID: 1020920853}
+  gameData:
+    playerTickets: 0
 --- !u!4 &1188331374
 Transform:
   m_ObjectHideFlags: 0

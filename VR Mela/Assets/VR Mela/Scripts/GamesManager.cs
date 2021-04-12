@@ -5,6 +5,7 @@ using UnityEngine;
 public class GamesManager : MonoBehaviour
 {
     public GameStats gameStats;
+    public GameData gameData;
 
     public void Awake() {
         if (SaveExists("stats")) {
@@ -17,12 +18,23 @@ public class GamesManager : MonoBehaviour
     }
 
     public void SaveGame() {
-        SaveManager.Save(gameStats,"stats");
+        gameData.playerTickets = gameStats.playerTickets;
+        gameData.collectedRewards = gameStats.CollectedRewards;
+        Debug.Log("Saving Following Data: PlayerTickets:: " + gameData.playerTickets);
+        foreach (string key in gameData.collectedRewards) {
+            Debug.Log("HashSet Element:: " + key);
+        }
+        SaveManager.Save(gameData,"stats");
     }
 
     public void LoadGame()
     {
-        GameData gameData = SaveManager.Load<GameData>("stats");
+        gameData = SaveManager.Load<GameData>("stats");
+        Debug.Log("Loading Following Data: PlayerTickets:: " + gameData.playerTickets);
+        foreach (string key in gameData.collectedRewards)
+        {
+            Debug.Log("HashSet Element:: " + key);
+        }
         gameStats.playerTickets = gameData.playerTickets;
         gameStats.CollectedRewards = gameData.collectedRewards;
     }

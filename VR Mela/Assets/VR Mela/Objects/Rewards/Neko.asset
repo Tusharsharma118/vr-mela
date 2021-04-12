@@ -15,4 +15,4 @@ MonoBehaviour:
   reward: {fileID: 919132149155446097, guid: 7080f225446cacb44a307e724a93fa94, type: 3}
   cost: 1800
   name: Neko
-  isBought: 0
+  isBought: 1

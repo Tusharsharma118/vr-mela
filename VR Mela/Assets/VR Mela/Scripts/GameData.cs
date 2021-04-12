@@ -3,8 +3,8 @@
 [System.Serializable]
 public class GameData
 {
-    public float playerTickets;
-    public HashSet<string> collectedRewards { get; private set; } = new HashSet<string>();
+    public int playerTickets;
+    public HashSet<string> collectedRewards { get; set; } = new HashSet<string>();
 
     public GameData(GameStats gameStats) {
         this.playerTickets = gameStats.playerTickets;

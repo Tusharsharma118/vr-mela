@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class GameStats : MonoBehaviour
 {
-    public float playerTickets;
+    public int playerTickets;
     public HashSet<string> CollectedRewards { get; set; } = new HashSet<string>();
     private Reward[] rewards;
     public GameObject rewardsCarousel;
 
     private void Awake() {
         rewards = rewardsCarousel.GetComponent<Carousel>().rewards;
+        CollectedRewards = new HashSet<string>();
         updateCollectedRewards();
     }
 
@@ -28,6 +29,9 @@ public class GameStats : MonoBehaviour
     }
 
     public void addRewardtoOwned(String id) {
+        if (CollectedRewards == null) {
+            CollectedRewards = new HashSet<string>();
+        }
         CollectedRewards.Add(id);
     }
 
@@ -36,11 +40,11 @@ public class GameStats : MonoBehaviour
         return playerTickets;
      }
 
-    public void incrementPlayerTickets(float amount) {
+    public void incrementPlayerTickets(int amount) {
         this.playerTickets += amount;
     }
 
-    public void decrementPlayerTickets(float amount) {
+    public void decrementPlayerTickets(int amount) {
         this.playerTickets -= amount;
     }
 }
