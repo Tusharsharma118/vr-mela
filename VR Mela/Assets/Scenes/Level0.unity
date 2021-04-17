@@ -927,7 +927,7 @@ GameObject:
   - component: {fileID: 128519592}
   m_Layer: 0
   m_Name: RewardCarousel
-  m_TagString: Untagged
+  m_TagString: RewardCarousel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -952,12 +952,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06806a029e443434a84cb7137c2b11f2, type: 2}
   - {fileID: 11400000, guid: aae699e9586304d4ca1d472bc401b7c5, type: 2}
   - {fileID: 11400000, guid: 3187c7790c175cb43b758be6573e7758, type: 2}
-  - {fileID: 11400000, guid: 3187c7790c175cb43b758be6573e7758, type: 2}
   ResetCenterRotation: 1
   DistanceFromCenter: 3
   AssumeObject: 1
-  ChosenObject: 0
+  ChosenObject: 1
   speedOfrotation: 0.1
+  bankruptAlertView: {fileID: 1645501225}
 --- !u!4 &128519593
 Transform:
   m_ObjectHideFlags: 0
@@ -2579,7 +2579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &589674953
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2612,7 +2612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4984,7 +4984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb6daef05213fc449a6a855cfe0bb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTickets: 40
+  playerTickets: 1900
+  rewardsCarousel: {fileID: 128519591}
 --- !u!4 &1020920854
 Transform:
   m_ObjectHideFlags: 0
@@ -5749,6 +5750,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStats: {fileID: 1020920853}
+  gameData:
+    playerTickets: 0
 --- !u!4 &1188331374
 Transform:
   m_ObjectHideFlags: 0
@@ -6775,7 +6778,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1290901508
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9044,7 +9047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1645501226
 RectTransform:
   m_ObjectHideFlags: 0

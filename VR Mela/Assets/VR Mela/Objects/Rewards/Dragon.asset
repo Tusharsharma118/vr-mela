@@ -15,4 +15,4 @@ MonoBehaviour:
   reward: {fileID: 919132149155446097, guid: aa6088b626abb114e9e219577b29fef2, type: 3}
   cost: 7000
   name: Dragon
-  isBought: 0
+  isBought: 1
