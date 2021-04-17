@@ -22,7 +22,7 @@ public class Carousel : MonoBehaviour
     public bool AssumeObject = true; // if true assume the object that is picked, otherwise (false) keep checking what the next item is through raycast.
     public int ChosenObject = 0; //index of the object that is centered in the carousel
     public float speedOfrotation = 0.1f; //the speed in which the carousel rotates: values should be between 0.01f -> 1.0f, zero will stop the rotation
-
+    public GameObject bankruptAlertView;
 
     private static float diameter = 360.0f; //the diameter is always 360 degrees
     private Transform theRayCaster = null; //create an empty transform
@@ -188,7 +188,11 @@ public class Carousel : MonoBehaviour
     private void updatePricePlate()
     {
         GameObject displayButtonContainer = GameObject.FindWithTag("RewardNamePlate");
-        displayButtonContainer.GetComponent<TextMeshProUGUI>().text = rewards[ChosenObject].name.ToUpper() + " :: " + rewards[ChosenObject].cost + " TICKETS  BUY ?";
+        String textToDisplay = rewards[ChosenObject].name.ToUpper() + " :: " + rewards[ChosenObject].cost + " TICKETS  BUY ?";
+        if (rewards[ChosenObject].isBought) {
+            textToDisplay = rewards[ChosenObject].name.ToUpper() + "  Already Purchased!!";
+        }
+        displayButtonContainer.GetComponent<TextMeshProUGUI>().text = textToDisplay;
     }
 
     private void populateTicketsInScene() {
@@ -203,7 +207,13 @@ public class Carousel : MonoBehaviour
     //deduct tickets when buying something
     public void onBuy() {
         Debug.Log("Tickets before Buying " + gameStats.getPlayerTickets().ToString());
-        if (gameStats.getPlayerTickets() >= rewards[ChosenObject].cost)
+        // first check if item already bought
+
+        if (rewards[ChosenObject].isBought) {
+            
+            StartCoroutine(alertAlreadyBought());
+
+        }else if (gameStats.getPlayerTickets() >= rewards[ChosenObject].cost)// check if enough ingame currency
         {
             gameStats.decrementPlayerTickets((int)rewards[ChosenObject].cost);
             //mark object as bought and save it somehow that its bought then update the rewards array
@@ -216,21 +226,26 @@ public class Carousel : MonoBehaviour
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<GamesManager>().SaveGame();
         }
         else {
-            GameObject bankruptAlertView = GameObject.FindGameObjectWithTag("BankruptAlertView");
-            for (int j = 0; j < bankruptAlertView.transform.childCount; j++)
-            {
-                bankruptAlertView.transform.GetChild(j).gameObject.SetActive(true);
-            }
-            StartCoroutine(timer(3));
-            for (int j = 0; j < bankruptAlertView.transform.childCount; j++)
-            {
-                bankruptAlertView.transform.GetChild(j).gameObject.SetActive(false);
-            }
-
+                StartCoroutine(alertNotEnoughCurrency());
         }
     }
 
-    private IEnumerator timer(int seconds) {
-        yield return new WaitForSeconds(seconds);
+    private IEnumerator alertNotEnoughCurrency() {
+        Debug.Log("Started Coroutine, GameObjectName" + bankruptAlertView.name);
+        bankruptAlertView.SetActive(true);
+        TextMeshProUGUI textView = bankruptAlertView.GetComponentInChildren<TextMeshProUGUI>();
+        textView.text = "Not Enough tickets play some more ~!";
+        yield return new WaitForSeconds(2.5f);
+        bankruptAlertView.SetActive(false);
+    }
+
+    private IEnumerator alertAlreadyBought()
+    {
+        Debug.Log("Started Coroutine Already Bought, GameObjectName" + bankruptAlertView.name);
+        bankruptAlertView.SetActive(true);
+        TextMeshProUGUI textView = bankruptAlertView.GetComponentInChildren<TextMeshProUGUI>();
+        textView.text = "Reward Already Bought!!";
+        yield return new WaitForSeconds(2.5f);
+        bankruptAlertView.SetActive(false);
     }
 }
