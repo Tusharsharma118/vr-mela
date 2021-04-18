@@ -25,6 +25,9 @@ TagManager:
   - GameManager
   - BankruptAlertView
   - RewardCarousel
+  - EarthPot
+  - CrackedPot
+  - BullsEye
   layers:
   - Default
   - TransparentFX

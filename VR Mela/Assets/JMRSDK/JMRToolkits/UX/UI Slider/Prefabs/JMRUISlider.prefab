@@ -488,3 +488,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   j_StepOffset: 1
   j_SwipeDelay: 0.125
+  OnSwipe:
+    m_PersistentCalls:
+      m_Calls: []
