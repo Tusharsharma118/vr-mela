@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b3333efb1bbba4394a9ed708e4d459, type: 3}
   m_Name: Panda
   m_EditorClassIdentifier: 
-  reward: {fileID: 919132149155446097, guid: a8e3748f54512944aa554f3ca7f46bc4, type: 3}
+  reward: {fileID: 919132149155446097, guid: 8d37d96fc4b0fcb48acc49cfb339c40a, type: 3}
   cost: 4000
   name: Panda
   isBought: 0

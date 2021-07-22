@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4283138741241368762}
   - component: {fileID: 3685220630570171101}
   m_Layer: 0
-  m_Name: Sphere (3)
+  m_Name: BullsEye (3)
   m_TagString: BullsEye
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 3592600549353430204}
   - component: {fileID: 6150275553750979395}
   m_Layer: 0
-  m_Name: Sphere (1)
+  m_Name: BullsEye (1)
   m_TagString: BullsEye
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,8 +198,8 @@ GameObject:
   - component: {fileID: 987734617054197170}
   - component: {fileID: 3049451722374103416}
   - component: {fileID: 7779769287514913751}
-  - component: {fileID: 5248800398994844640}
   - component: {fileID: 5188598781073855779}
+  - component: {fileID: 5648431040228882292}
   m_Layer: 0
   m_Name: EarthPot
   m_TagString: EarthPot
@@ -288,20 +288,8 @@ MonoBehaviour:
     type: 3}
   crackedPot: {fileID: 1019273299249287347, guid: 39caabf96228ac84ab3bebfd77fce323,
     type: 3}
---- !u!64 &5248800398994844640
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3553665971495395501}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7016030322194801813, guid: f087177df512bdb48bac2d3013c50270, type: 3}
+  hitSound: {fileID: 8300000, guid: 26e0adfb634f0754e9d8cb834494df68, type: 3}
+  breakSound: {fileID: 8300000, guid: 406027efec6c6b54886e5e58a491210d, type: 3}
 --- !u!54 &5188598781073855779
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -318,6 +306,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!135 &5648431040228882292
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3553665971495395501}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.0839432
+  m_Center: {x: -0.00000020861626, y: -0.0000001788139, z: 0.08868517}
 --- !u!1 &6228413375150696010
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +332,7 @@ GameObject:
   - component: {fileID: 5908670035044235462}
   - component: {fileID: 8681093369298131645}
   m_Layer: 0
-  m_Name: Sphere (2)
+  m_Name: BullsEye (2)
   m_TagString: BullsEye
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -424,7 +425,7 @@ GameObject:
   - component: {fileID: 3668162896275292867}
   - component: {fileID: 2678250107277745013}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: BullsEye
   m_TagString: BullsEye
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

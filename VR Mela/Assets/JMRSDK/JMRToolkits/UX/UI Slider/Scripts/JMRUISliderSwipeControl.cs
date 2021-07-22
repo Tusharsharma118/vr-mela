@@ -6,12 +6,13 @@ using UnityEngine.Events;
 namespace JMRSDK.Toolkit.UI
 {
     [RequireComponent(typeof(Slider))]
-    public class JMRUISliderSwipeControl : MonoBehaviour, ISwipeHandler
+    public class JMRUISliderSwipeControl : JMRBaseThemeAnimator, ISwipeHandler
     {
         [SerializeField]
         private int j_StepOffset;
         [SerializeField]
         private float j_SwipeDelay;
+        public bool supportStep = false;
         private Slider j_Slider;
         private Slider.Direction j_SlDirection;
         private int j_SwipeDirectionCntrl;
@@ -38,37 +39,49 @@ namespace JMRSDK.Toolkit.UI
             j_StepOffset = value;
         }
 
-        public void OnSwipeDown(SwipeEventData eventData, float value)
+        float cntrl = 0.75f;
+        public void OnSwipeUp(SwipeEventData eventData, float value)
         {
-            if (!j_Slider.interactable || j_Timer < j_SwipeDelay)
+            if (!j_Slider.interactable || (supportStep && j_Timer < j_SwipeDelay))
             {
                 return;
             }
 
             j_Timer = 0;
-            ProcessSwipe(Direction.Vertical, -step);
+            ProcessSwipe(Direction.Vertical, supportStep? step:value * cntrl);
+        }
+
+        public void OnSwipeDown(SwipeEventData eventData, float value)
+        {
+            if (!j_Slider.interactable || (supportStep && j_Timer < j_SwipeDelay))
+            {
+                return;
+            }
+
+            j_Timer = 0;
+            ProcessSwipe(Direction.Vertical, supportStep ? -step : value * cntrl);
         }
 
         public void OnSwipeLeft(SwipeEventData eventData, float value)
         {
-            if (!j_Slider.interactable || j_Timer < j_SwipeDelay)
+            if (!j_Slider.interactable || (supportStep && j_Timer < j_SwipeDelay))
             {
                 return;
             }
 
             j_Timer = 0;
-            ProcessSwipe(Direction.Horizontal, -step);
+            ProcessSwipe(Direction.Horizontal, supportStep ? -step : value * cntrl);
         }
 
         public void OnSwipeRight(SwipeEventData eventData, float value)
         {
-            if (!j_Slider.interactable || j_Timer < j_SwipeDelay)
+            if (!j_Slider.interactable || (supportStep && j_Timer < j_SwipeDelay))
             {
                 return;
             }
 
             j_Timer = 0;
-            ProcessSwipe(Direction.Horizontal, step);
+            ProcessSwipe(Direction.Horizontal, supportStep ? step : value * cntrl);
         }
 
         public void OnSwipeStarted(SwipeEventData eventData)
@@ -76,39 +89,47 @@ namespace JMRSDK.Toolkit.UI
 
         }
 
-        public void OnSwipeUp(SwipeEventData eventData, float value)
-        {
-            if (!j_Slider.interactable || j_Timer < j_SwipeDelay)
-            {
-                return;
-            }
-
-            j_Timer = 0;
-            ProcessSwipe(Direction.Vertical, step);
-        }
-
         public void OnSwipeUpdated(SwipeEventData eventData, Vector2 swipeData)
         {
 
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             j_Timer = j_SwipeDelay;
         }
 
         // Start is called before the first frame update
-        void Awake()
+        public override void Awake()
         {
+            base.Awake();
             j_Slider = GetComponent<Slider>();
+            prevInteractable = !interactable;
             if (j_Slider)
             {
                 CalculateNewStep();
             }
         }
 
-        private void Update()
+        public override void OnInteractableChange(bool isInteractable)
         {
+            base.OnInteractableChange(isInteractable);
+            j_Slider.interactable = isInteractable;
+            prevInteractable = isInteractable;
+        }
+
+        bool prevInteractable = false;
+        protected override void Update()
+        {
+            base.Update();
+
+            if(prevInteractable != j_Slider.interactable)
+            {
+                interactable = j_Slider.interactable;
+            }
+            prevInteractable = j_Slider.interactable;
+
             if (j_Slider && (j_Slider.minValue != prevMinVal || j_Slider.maxValue != prevMaxVal))
             {
                 CalculateNewStep();
@@ -120,6 +141,11 @@ namespace JMRSDK.Toolkit.UI
             }
 
             j_Timer += Time.deltaTime;
+        }
+
+        public override void OnSelectClicked(SelectClickEventData eventData)
+        {
+            
         }
 
         private void CalculateNewStep()
@@ -165,6 +191,5 @@ namespace JMRSDK.Toolkit.UI
             j_AdjustVal = j_AdjustVal > j_Slider.maxValue ? j_Slider.maxValue : j_AdjustVal < j_Slider.minValue ? j_Slider.minValue : j_AdjustVal;
             j_Slider.value = j_AdjustVal;
         }
-
     }
 }

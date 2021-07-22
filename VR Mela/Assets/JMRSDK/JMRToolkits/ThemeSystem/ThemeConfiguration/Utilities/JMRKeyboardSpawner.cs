@@ -6,8 +6,12 @@ public class JMRKeyboardSpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject keyboardPrefab;
+    [SerializeField]
+    private GameObject keyboardV2Prefab;
     private JMRUIRayCastCamera j_JMRRaycastCamera;
     public static JMRKeyboardSpawner Instance;
+    [SerializeField]
+    private bool supportV2Keyboard = true;
 
     private void Awake()
     {
@@ -16,10 +20,16 @@ public class JMRKeyboardSpawner : MonoBehaviour
 
     public bool SpawnKeyboard(IKeyboardInput input)
     {
-        if (!keyboardPrefab)
+        if (!keyboardPrefab && !supportV2Keyboard)
+        {
             return false;
+        }
+        else if (!keyboardV2Prefab && supportV2Keyboard)
+        {
+            return false;
+        }
 
-        JMRVirtualKeyBoard obj = Instantiate(keyboardPrefab).GetComponent<JMRVirtualKeyBoard>();
+        JMRVirtualKeyBoard obj = Instantiate(supportV2Keyboard ? keyboardV2Prefab : keyboardPrefab).GetComponent<JMRVirtualKeyBoard>();
         SetRaycastCameraToCanvas(obj.GetComponent<Canvas>());
         obj.ShowKeyBoard(input);
         return true;

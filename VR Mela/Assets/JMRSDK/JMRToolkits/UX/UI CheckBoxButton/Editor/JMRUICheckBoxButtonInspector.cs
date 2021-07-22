@@ -17,7 +17,7 @@ namespace JMRSDK.Toolkit.UI.Inspector
         private static string PrefabPath => AssetDatabase.GUIDToAssetPath(PrefabGUID);
 
 
-        [MenuItem("JioMixedReality/UI/CheckBox")]
+        [MenuItem("JioMixedReality/Toolkits/V1/CheckBox")]
         static void InstantiatePrefab()
         {
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(PrefabPath, typeof(GameObject));

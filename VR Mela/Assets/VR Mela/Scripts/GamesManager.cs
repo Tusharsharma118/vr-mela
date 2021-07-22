@@ -6,11 +6,30 @@ public class GamesManager : MonoBehaviour
 {
     public GameStats gameStats;
     public GameData gameData;
+    public GameObject mainMenu;
+
+    public GameObject introPlayer;
+    public float timer = 12f;
+
+    private bool firstTime = true;
 
     public void Awake() {
         if (SaveExists("stats")) {
             LoadGame();
         }
+    }
+
+    public void Update()
+    {
+        timer -= Time.deltaTime;
+        if(timer < 0 && firstTime)
+        {
+            firstTime = false;
+            introPlayer.SetActive(false);
+            mainMenu.SetActive(true);
+        }
+
+       
     }
     public void QuitGame() {
         Debug.Log("QuitGameInvoked!!");
@@ -25,6 +44,16 @@ public class GamesManager : MonoBehaviour
             Debug.Log("HashSet Element:: " + key);
         }
         SaveManager.Save(gameData,"stats");
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
     }
 
     public void LoadGame()

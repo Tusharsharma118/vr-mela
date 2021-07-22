@@ -14,6 +14,7 @@ implementation 'com.squareup.okhttp3:okhttp:3.14.1'
 implementation "androidx.preference:preference-ktx:1.1.1"
 implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
 implementation 'com.jakewharton.timber:timber:4.7.1'
+implementation 'com.jiotesseract.mr.userSDK:userSDK:1.0.27'
 **DEPS**}
 
 android {

@@ -28,6 +28,24 @@ allprojects {
 				password vstsMavenAccessToken
             }
 		}
+		maven {
+            url 'https://pkgs.dev.azure.com/tesseractimg/mr-repositories/_packaging/userSDK/maven/v1'
+            credentials {
+                username "tesseractimg"
+                //The Azure DevOps Services build system will use the "SYSTEM_ACCESSTOKEN" to authenticate to Azure DevOps Services feeds
+                password System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") != null ? System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") : vstsMavenAccessToken
+            }
+        }
+
+        maven {
+            url 'https://pkgs.dev.azure.com/tesseractimg/mr-repositories/_packaging/baseNetworkSDK/maven/v1'
+            name 'baseNetworkSDK'
+            credentials {
+                username "tesseractimg"
+                //The Azure DevOps Services build system will use the "SYSTEM_ACCESSTOKEN" to authenticate to Azure DevOps Services feeds
+                password System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") != null ? System.getenv("AZURE_ARTIFACTS_ENV_ACCESS_TOKEN") : vstsMavenAccessToken
+            }
+        }
         
         flatDir {
             dirs "${project(':unityLibrary').projectDir}/libs"

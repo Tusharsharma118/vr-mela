@@ -28,6 +28,18 @@ TagManager:
   - EarthPot
   - CrackedPot
   - BullsEye
+  - GameStall
+  - Pebble
+  - MatkaGameManager
+  - EarthPotBroken
+  - UIElement
+  - PotConfiguration
+  - HoverLayer
+  - TumblerTriggerArea
+  - Tumbler
+  - Ball
+  - TumblerConfiguration
+  - PowerMeter
   layers:
   - Default
   - TransparentFX

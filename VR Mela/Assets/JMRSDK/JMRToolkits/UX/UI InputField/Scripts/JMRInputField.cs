@@ -352,24 +352,9 @@ namespace JMRSDK.Toolkit.UI
 
         public Color SelectionColor { get { return selectionColor; } set { if (SetPropertyUtility.SetColor(ref selectionColor, value)) MarkGeometryAsDirty(); } }
 
-        public SubmitEvent OnEndEdit { get { return endEdit; } set { SetPropertyUtility.SetClass(ref endEdit, value); } }
-
-        public SubmitEvent Submit { get { return submit; } set { SetPropertyUtility.SetClass(ref submit, value); } }
-
-        public SelectionEvent Select { get { return select; } set { SetPropertyUtility.SetClass(ref select, value); } }
-
-        public SelectionEvent Deselect { get { return deselect; } set { SetPropertyUtility.SetClass(ref deselect, value); } }
-
-        private TextSelectionEvent OnTextSelection { get { return textSelection; } set { SetPropertyUtility.SetClass(ref textSelection, value); } }
-
-        private TextSelectionEvent OnEndTextSelection { get { return endTextSelection; } set { SetPropertyUtility.SetClass(ref endTextSelection, value); } }
-
-        public OnChangeEvent OnValueChanged { get { return valueChanged; } set { SetPropertyUtility.SetClass(ref valueChanged, value); } }
 
         private TouchScreenKeyboardEvent OnTouchScreenKeyboardStatusChanged { get { return touchScreenKeyboardStatusChanged; } set { SetPropertyUtility.SetClass(ref touchScreenKeyboardStatusChanged, value); } }
-
         public OnValidateInput ValidateInput { get { return validateInput; } set { SetPropertyUtility.SetClass(ref validateInput, value); } }
-
         public int CharacterLimit
         {
             get { return characterLimit; }
@@ -619,7 +604,7 @@ namespace JMRSDK.Toolkit.UI
         #endregion
 
         #region PUBLIC FIELDS
-        [SerializeField,Header("Keyboard Settings")]
+        [SerializeField, Header("Keyboard Settings")]
         private Transform KeyboardSpawnPoint;
         public float KeyBoardPositionOffset = 0.045f;
 
@@ -636,140 +621,156 @@ namespace JMRSDK.Toolkit.UI
         [SerializeField]
         protected Graphic placeholder;
 
-        [SerializeField]
+        public bool supportMultiLine = false;
+
+        //[SerializeField]
         protected Scrollbar verticalScrollbar;
 
-        [SerializeField]
+        //[SerializeField]
         protected TMP_ScrollbarEventHandler verticalScrollbarEventHandler;
         public Transform j_KeyboardPosition { get => KeyboardSpawnPoint; set => KeyboardSpawnPoint = value; }
+
+        public SubmitEvent Submit { get; set; }
+        /// <summary>
+        /// Event delegates triggered when the input field submits its data.
+        /// </summary>
+        [SerializeField]
+        private SubmitEvent submit;
+
+        public OnChangeEvent ValueChanged { get; set; }
+        /// <summary>
+        /// Event delegates triggered when the input field changes its data.
+        /// </summary>
+        [SerializeField]
+        private OnChangeEvent valueChanged;
 
         /// <summary>
         /// 
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         protected float scrollSensitivity = 1.0f;
 
         //[SerializeField]
         //protected TMP_Text m_PlaceholderTextComponent;
 
-        [SerializeField]
+        //[SerializeField]
         private ContentType contentType = ContentType.Standard;
 
         /// <summary>
         /// Type of data expected by the input field.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private InputType inputType = InputType.Standard;
 
         /// <summary>
         /// The character used to hide text in password field.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private char asteriskChar = '*';
 
         /// <summary>
         /// Keyboard type applies to mobile keyboards that get shown.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private TouchScreenKeyboardType keyboardType = TouchScreenKeyboardType.Default;
 
-        [SerializeField]
-        private LineType lineType = LineType.SingleLine;
+        //[SerializeField]
+        private LineType lineType = LineType.MultiLineNewline;
 
         /// <summary>
         /// Should hide mobile input field part of the virtual keyboard.
         /// </summary>
-        [SerializeField]
-        private bool hideMobileInput = false;
+        //[SerializeField]
+        private bool hideMobileInput = true;
 
         /// <summary>
         /// Should hide soft / virtual keyboard.
         /// </summary>
-        [SerializeField]
-        private bool hideSoftKeyboard = false;
+        //[SerializeField]
+        private bool hideSoftKeyboard = true;
 
         /// <summary>
         /// What kind of validation to use with the input field's data.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private CharacterValidation characterValidation = CharacterValidation.None;
 
         /// <summary>
         /// The Regex expression used for validating the text input.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private string regexValue = string.Empty;
 
         /// <summary>
         /// The point sized used by the placeholder and input text object.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private float globalPointSize = 14;
 
         /// <summary>
         /// Maximum number of characters allowed before input no longer works.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private int characterLimit = 0;
 
         /// <summary>
         /// Event delegates triggered when the input field submits its data.
         /// </summary>
 
-        [SerializeField]
+        //[SerializeField]
         private Color caretColor = new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f);
 
-        [SerializeField]
+        //[SerializeField]
         private bool customCaretColor = false;
 
-        [SerializeField]
+        //[SerializeField]
         private Color selectionColor = new Color(168f / 255f, 206f / 255f, 255f / 255f, 192f / 255f);
 
         /// <summary>
         /// Text Text used to display the input's value.
         /// </summary>
-        [SerializeField]
-        [TextArea(5, 10)]
+        //[SerializeField]
+        //[TextArea(5, 10)]
         protected string text = string.Empty;
         string IKeyboardInput.Text { get => text; set => SetText(value); }
 
-        [SerializeField]
-        [Range(0f, 4f)]
+        //[SerializeField]
+        //[Range(0f, 4f)]
         private float caretBlinkRate = 0.85f;
 
-        [SerializeField]
-        [Range(1, 5)]
+        //[SerializeField]
+        //[Range(1, 5)]
         private int caretWidth = 1;
 
-        [SerializeField]
+        //[SerializeField]
         private bool readOnly = false;
 
-        [SerializeField]
+        //[SerializeField]
         private bool richText = true;
 
-        [SerializeField]
+        //[SerializeField]
         protected TMP_FontAsset globalFontAsset;
 
         /// <summary>
         /// Determines if the whole text will be selected when focused.
         /// </summary>
 
-        [SerializeField]
+        //[SerializeField]
         protected bool focusSelectAll = true;
 
-        [SerializeField]
+        //[SerializeField]
         protected bool resetOnDeActivation = true;
 
-        [SerializeField]
+        //[SerializeField]
         private bool restoreOriginalTextOnEscape = true;
 
-        [SerializeField]
+        //[SerializeField]
         protected bool richTextEditingAllowed = false;
 
-        [SerializeField]
+        //[SerializeField]
         protected int lineLimit = 0;
 
-        [SerializeField]
+        //[SerializeField]
         protected TMP_InputValidator inputValidator = null;
         #endregion
 
@@ -796,34 +797,29 @@ namespace JMRSDK.Toolkit.UI
         [Serializable]
         public class OnChangeEvent : UnityEvent<string> { }
 
-        [Serializable]
+        //[Serializable]
         public class SelectionEvent : UnityEvent<string> { }
 
-        [Serializable]
+        //[Serializable]
         public class TextSelectionEvent : UnityEvent<string, int, int> { }
 
-        [Serializable]
+        //[Serializable]
         public class TouchScreenKeyboardEvent : UnityEvent<TouchScreenKeyboard.Status> { }
 
-        [SerializeField]
+        //[SerializeField]
         private SubmitEvent endEdit = new SubmitEvent();
 
-        /// <summary>
-        /// Event delegates triggered when the input field submits its data.
-        /// </summary>
-        [SerializeField]
-        private SubmitEvent submit = new SubmitEvent();
 
         /// <summary>
         /// Event delegates triggered when the input field is focused.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private SelectionEvent select = new SelectionEvent();
 
         /// <summary>
         /// Event delegates triggered when the input field focus is lost.
         /// </summary>
-        [SerializeField]
+       //[SerializeField]
         private SelectionEvent deselect = new SelectionEvent();
 
         /// <summary>
@@ -838,11 +834,6 @@ namespace JMRSDK.Toolkit.UI
         //[SerializeField]
         private TextSelectionEvent endTextSelection = new TextSelectionEvent();
 
-        /// <summary>
-        /// Event delegates triggered when the input field changes its data.
-        /// </summary>
-        [SerializeField]
-        private OnChangeEvent valueChanged = new OnChangeEvent();
 
         /// <summary>
         /// Event delegates triggered when the status of the TouchScreenKeyboard changes.
@@ -904,8 +895,6 @@ namespace JMRSDK.Toolkit.UI
         // Doesn't include dot and @ on purpose! See usage for details.
         const string j_KEmailSpecialCharacters = "!#$%&'*+-/=?^_`{|}~";
 
-        private JMRInteractable currentInteractable;
-
         #endregion
 
         #region CONSTRUCTOR
@@ -939,17 +928,18 @@ namespace JMRSDK.Toolkit.UI
         }
 #endif
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             //Debug.Log("*** OnEnable() *** - " + this.name);
 
-            //  base.OnEnable();
-
-            if (GetComponent<JMRInteractable>() != null)
+            if (Submit == null)
             {
-                currentInteractable = GetComponent<JMRInteractable>();
+                Submit = new SubmitEvent();
             }
-
+            if (ValueChanged == null)
+            {
+                ValueChanged = new OnChangeEvent();
+            }
             if (text == null)
                 text = string.Empty;
 
@@ -1009,9 +999,9 @@ namespace JMRSDK.Toolkit.UI
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
         }
 
-        private void OnDisable()
+        protected void OnDisable()
         {
-            // the coroutine will be terminated, so this will ensure it restarts when we are next activated
+
             j_BlinkCoroutine = null;
 
             DeactivateInputField();
@@ -1783,17 +1773,6 @@ namespace JMRSDK.Toolkit.UI
             j_ScrollbarUpdateRequired = true;
         }
 
-        public void OnDeselect()
-        {
-            if (!InteractableActive())
-                return;
-
-            DeactivateInputField();
-
-            //base.OnDeselect(eventData);
-            SendOnFocusLost();
-        }
-
         public virtual void OnSubmit(BaseEventData eventData)
         {
             if (!InteractableActive())
@@ -1852,18 +1831,6 @@ namespace JMRSDK.Toolkit.UI
             return false;
         }
 
-        public void HandleKeyboardEnterKey()
-        {
-        }
-
-        public void EditEnd()
-        {
-            if (!InteractableActive())
-                return;
-            if (OnEndEdit != null)
-                OnEndEdit.Invoke(text);
-        }
-
         #endregion
 
         #region DEFAULT METHODS
@@ -1903,7 +1870,7 @@ namespace JMRSDK.Toolkit.UI
             UpdateLabel();
 
             if (sendCallback)
-                SendOnValueChanged();
+                SendDynamicValueChange(Text);
         }
 
         void SetCaretVisible()
@@ -2091,13 +2058,7 @@ namespace JMRSDK.Toolkit.UI
 
         private bool InteractableActive()
         {
-            bool status = true;
-            if (currentInteractable != null)
-            {
-                if (!currentInteractable.IsEnabled)
-                    status = false;
-            }
-            return status;
+            return GetComponent<JMRInteractable>().IsEnabled;
         }
 
 
@@ -2958,8 +2919,8 @@ namespace JMRSDK.Toolkit.UI
         {
             if (!InteractableActive())
                 return;
-            if (OnValueChanged != null)
-                OnValueChanged.Invoke(Text);
+            if (ValueChanged != null)
+                valueChanged.Invoke(Text);
         }
 
 
@@ -3850,36 +3811,83 @@ namespace JMRSDK.Toolkit.UI
         /// Submit the input field's text.
         /// </summary>
 
+        public void HandleKeyboardEnterKey()
+        {
+        }
+
+        public void EditEnd()
+        {
+            if (!InteractableActive())
+                return;
+
+            SendDynamicSubmit(Text);
+        }
+
+        public void OnTextChanged()
+        {
+            if (!InteractableActive())
+                return;
+
+            ValueChanged?.Invoke(Text);
+            valueChanged?.Invoke(Text);
+        }
+
+        public void OnDeselect()
+        {
+            if (!InteractableActive())
+                return;
+
+            DeactivateInputField();
+
+            //base.OnDeselect(eventData);
+            SendOnFocusLost();
+        }
+
         protected void SendOnEndEdit()
         {
             if (!InteractableActive())
                 return;
-            if (OnEndEdit != null)
-                OnEndEdit.Invoke(text);
         }
 
         protected void SendOnSubmit()
         {
             if (!InteractableActive())
                 return;
-            if (Submit != null)
-                Submit.Invoke(text);
+            SendDynamicSubmit(Text);
+        }
+        private void SendDynamicSubmit(string typedText)
+        {
+            if (submit != null)
+            {
+                for (int i = 0; i < submit.GetPersistentEventCount(); i++)
+                {
+                    ((MonoBehaviour)submit.GetPersistentTarget(i)).SendMessage(submit.GetPersistentMethodName(i), typedText);
+                }
+            }
+            Submit?.Invoke(typedText);
+        }
+        private void SendDynamicValueChange(string typedText)
+        {
+            if (valueChanged != null)
+            {
+                for (int i = 0; i < valueChanged.GetPersistentEventCount(); i++)
+                {
+                    ((MonoBehaviour)valueChanged.GetPersistentTarget(i)).SendMessage(valueChanged.GetPersistentMethodName(i), typedText);
+                }
+            }
+            ValueChanged?.Invoke(typedText);
         }
 
         protected void SendOnFocus()
         {
             if (!InteractableActive())
                 return;
-            if (Select != null)
-                Select.Invoke(text);
         }
 
         protected void SendOnFocusLost()
         {
             if (!InteractableActive())
                 return;
-            if (Deselect != null)
-                Deselect.Invoke(text);
         }
 
         protected void SendOnTextSelection()
@@ -3888,8 +3896,6 @@ namespace JMRSDK.Toolkit.UI
                 return;
             j_Selected = true;
 
-            if (OnTextSelection != null)
-                OnTextSelection.Invoke(text, j_StringPositionInternal, j_StringSelectPositionInternal);
         }
 
         protected void SendOnEndTextSelection()
@@ -3897,9 +3903,6 @@ namespace JMRSDK.Toolkit.UI
             if (!InteractableActive())
                 return;
             if (!j_Selected) return;
-
-            if (OnEndTextSelection != null)
-                OnEndTextSelection.Invoke(text, j_StringPositionInternal, j_StringSelectPositionInternal);
 
             j_Selected = false;
         }
@@ -4160,6 +4163,11 @@ namespace JMRSDK.Toolkit.UI
                 yield return j_WaitForSecondsRealtime;
             }
             j_DragCoroutine = null;
+        }
+
+        public bool isMultiLineSupported()
+        {
+            return supportMultiLine;
         }
         #endregion
 

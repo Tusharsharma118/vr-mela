@@ -6,16 +6,17 @@ namespace JMRSDK.Toolkit.ThemeSystem
     {
         PrimaryLayer,
         SecondaryLayer,
+        SurfaceLayer,
         BackgroundLayer,
         ErrorLayer,
         PrimaryTextLayer,
         SecondaryTextLayer,
         BackgroundTextLayer,
         ErrorTextLayer,
-        SurfaceLayer,
         DisabledLayer,
         SurfaceTextLayer,
-        DisabledTextLayer
+        DisabledTextLayer,
+        HoverLayer
     }
 
     public enum ThemeIconStyle

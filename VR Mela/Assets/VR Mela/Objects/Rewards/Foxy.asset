@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b3333efb1bbba4394a9ed708e4d459, type: 3}
   m_Name: Foxy
   m_EditorClassIdentifier: 
-  reward: {fileID: 919132149155446097, guid: f4bd6ae3b36501f448684188862a83d8, type: 3}
+  reward: {fileID: 919132149155446097, guid: 9b4319c37002a174f978b14220ac840f, type: 3}
   cost: 3000
   name: Foxy
   isBought: 0

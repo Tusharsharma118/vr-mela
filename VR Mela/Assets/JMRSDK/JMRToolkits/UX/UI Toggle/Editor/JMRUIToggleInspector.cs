@@ -16,7 +16,7 @@ namespace JMRSDK.Toolkit.UI.Inspector
         private static string PrefabPath => AssetDatabase.GUIDToAssetPath(PrefabGUID);
 
 
-        [MenuItem("JioMixedReality/UI/Toggle")]
+        [MenuItem("JioMixedReality/Toolkits/V1/Toggle")]
         static void InstantiatePrefab()
         {
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(PrefabPath, typeof(GameObject));

@@ -7,12 +7,13 @@ using UnityEngine.Events;
 using UnityEngine.Animations;
 using System.Collections.Generic;
 using JMRSDK.InputModule;
+using System;
 
 namespace JMRSDK.Toolkit.UI
 {
     public delegate void DMessageHandler(string command);
 
-    public class JMRVirtualKeyBoard : JMRPersistance<JMRVirtualKeyBoard>, IMessageHandler
+    public class JMRVirtualKeyBoard : JMRPersistance<JMRVirtualKeyBoard>, IMessageHandler,ISelectClickHandler
     {
         #region SERIALIZED FIELDS
         [SerializeField]
@@ -20,7 +21,9 @@ namespace JMRSDK.Toolkit.UI
         [SerializeField]
         private TextMeshProUGUI suggestedText;
         [SerializeField]
-        private GameObject alphabets, special_characters;
+        private GameObject alphabets, special_characters, alphabetsText, special_charactersText;
+        [SerializeField]
+        private UnityEngine.UI.Button searchBtn;
         [SerializeField]
         private LookAtConstraint lookAt;
         #endregion
@@ -41,10 +44,24 @@ namespace JMRSDK.Toolkit.UI
 
         #region MONO METHODS
 
+        public IKeyboardInput GetCurrentInput()
+        {
+            return j_input;
+        }
+
         private void OnEnable()
         {
             if (!j_ThisTransform)
                 j_ThisTransform = transform;
+            JMRInputManager.Instance.AddGlobalListener(gameObject);
+        }
+
+        private void OnDisable()
+        {
+            if (JMRInputManager.Instance != null && gameObject)
+            {
+                JMRInputManager.Instance.RemoveGlobalListener(gameObject);
+            }
         }
 
         private string prevText = "";
@@ -57,7 +74,34 @@ namespace JMRSDK.Toolkit.UI
             {
                 prevText = suggestedText.text;
                 j_input.Text = cachedTex + suggestedText.text;
+                //j_input.OnTextChanged();
             }
+
+            if (string.IsNullOrEmpty(j_input.Text))
+            {
+                suggestedText.text = cachedTex = prevText = "";
+            }
+
+            if (j_prevButton == "NEWLINE" && j_input != null)
+            {
+                HandleMultiLine(j_input);
+            }
+        }
+
+
+
+        private void HandleMultiLine(IKeyboardInput input)
+        {
+            if (input.isMultiLineSupported())
+            {
+                cachedTex = j_input.Text;
+                suggestedText.text = "";
+            }
+            else
+            {
+                HideKeyBoard();
+            }
+            j_prevButton = "";
         }
 
         #endregion
@@ -70,8 +114,37 @@ namespace JMRSDK.Toolkit.UI
         /// <param name="j_InputField"></param>
         /// 
         private string cachedTex = "";
+
+        public void OnSelectClicked(SelectClickEventData eventData)
+        {
+            if (!gameObject.activeInHierarchy)
+            {
+                return;
+            }
+
+            if(eventData.selectedObject == null || eventData.selectedObject.transform.root.GetComponent<JMRVirtualKeyBoard>() == null)
+            {
+                if (eventData.selectedObject == null || (eventData.selectedObject.tag != "Search" && (eventData.selectedObject.GetComponent<IKeyboardInput>() == null || eventData.selectedObject.GetComponent<IKeyboardInput>() != j_input)))
+                {
+                    HideKeyBoard(true);
+                }
+            }
+        }
+
         public void ShowKeyBoard(IKeyboardInput j_InputField)
         {
+            if(j_InputField == j_input)
+            {
+                return;
+            }
+
+            if (!isListeningForVoiceCommand)
+            {
+                JMRVoiceManager.OnSpeechResults += OnSpeechResult;
+                JMRVoiceManager.OnSpeechError += OnSpeechError;
+                JMRVoiceManager.OnSpeechCancelled += OnSpeechCancelled;
+            }
+
             if (!gameObject.activeInHierarchy)
                 gameObject.SetActive(true);
 
@@ -86,16 +159,19 @@ namespace JMRSDK.Toolkit.UI
                 if (j_InputField.j_KeyboardPosition != null)
                 {
                     transform.position = j_InputField.j_KeyboardPosition.position;
+                    transform.rotation = j_InputField.j_KeyboardPosition.rotation;
                 }
                 else
                 {
                     if (inputField.transform.position.y >= 0)
                     {
                         transform.position = inputField.transform.position + Vector3.down * 0.4f;
+                        transform.rotation = inputField.transform.rotation;
                     }
                     else
                     {
                         transform.position = inputField.transform.position + Vector3.up * 0.4f;
+                        transform.rotation = inputField.transform.rotation;
                     }
                 }
 
@@ -111,24 +187,56 @@ namespace JMRSDK.Toolkit.UI
         /// <summary>
         /// Hide Keyboard.
         /// </summary>
-        public void HideKeyBoard()
+        public void HideKeyBoard(bool hideWitoutNotify = false,
+            bool hideWithoutDeselect = false,
+            bool notCheckIsKeyboarActive = false)
         {
-            if (!gameObject.activeSelf)
+            if (!notCheckIsKeyboarActive && !gameObject.activeSelf)
                 return;
 
-
             // anim.SetTrigger("Hide");
-            if (j_input != null)
+            if (j_input != null && !hideWitoutNotify)
             {
                 Constants.SearchString = suggestedText.text;
                 j_input.EditEnd();
-                j_input.OnDeselect();
+                if (!hideWithoutDeselect)
+                {
+                    j_input.OnDeselect();
+                }
+            } else if (voiceCommandField != null && !hideWitoutNotify) {
+                Constants.SearchString = suggestedText.text;
+                voiceCommandField.EditEnd();
+                if (!hideWithoutDeselect)
+                {
+                    voiceCommandField.OnDeselect();
+                }
+            } else if (hideWitoutNotify)
+            {
+                if (!hideWithoutDeselect)
+                {
+                    j_input.OnDeselect();
+                }
+            }
+
+            if (!isListeningForVoiceCommand)
+            {
+                JMRVoiceManager.OnSpeechResults -= OnSpeechResult;
+                JMRVoiceManager.OnSpeechError -= OnSpeechError;
+                JMRVoiceManager.OnSpeechCancelled -= OnSpeechCancelled;
             }
 
             isShown = false;
             this.j_input = null;
             special_characters.SetActive(false);
             alphabets.gameObject.SetActive(true);
+            if (special_charactersText != null)
+            {
+                special_charactersText.SetActive(false);
+            }
+            if (alphabetsText != null)
+            {
+                alphabetsText.gameObject.SetActive(true);
+            }
             gameObject.SetActive(false);
         }
 
@@ -191,16 +299,41 @@ namespace JMRSDK.Toolkit.UI
                         break;
                     special_characters.SetActive(false);
                     alphabets.gameObject.SetActive(true);
+                    special_charactersText.SetActive(false);
+                    alphabetsText.gameObject.SetActive(true);
                     break;
                 case Constants.SPECIAL_CHARACTERS:
                     if (special_characters.activeInHierarchy)
                         break;
                     alphabets.gameObject.SetActive(false);
                     special_characters.SetActive(true);
+                    if (special_charactersText != null)
+                    {
+                        special_charactersText.SetActive(true);
+                    }
+                    if (alphabetsText != null)
+                    {
+                        alphabetsText.gameObject.SetActive(false);
+                    }
                     break;
                 case Constants.ENTER:
                     j_input.HandleKeyboardEnterKey();
                     HideKeyBoard();
+                    break;
+                case Constants.NEWLINE:
+                    if (j_input.isMultiLineSupported())
+                    {
+                        suggestedText.text += "\n";
+                    }
+                    break;
+                case Constants.VOICECOMMAND:
+                    if (j_input != null)
+                    {
+                        JMRVoiceManager.Instance.ShowVoiceToolkit();
+                        voiceCommandField = j_input;
+                        isListeningForVoiceCommand = true;
+                        HideKeyBoard(true, true);
+                    }
                     break;
                 default:
                     if (command == " " && (j_input == null || j_input.Text.Length <= 0))
@@ -218,6 +351,44 @@ namespace JMRSDK.Toolkit.UI
                 isTempUpper = false;
             }
             j_prevButton = command;
+        }
+
+
+        private IKeyboardInput voiceCommandField = null;
+        private bool isListeningForVoiceCommand=false;
+        private void OnSpeechError(string obj)
+        {
+            JMRVoiceManager.Instance.HideVoiceToolkit();
+            if (isListeningForVoiceCommand && voiceCommandField != null)
+            {
+                isListeningForVoiceCommand = false;
+                ShowKeyBoard(voiceCommandField);
+            }
+            voiceCommandField = null;
+        }
+
+        private void OnSpeechCancelled(string arg1, long arg2)
+        {
+            JMRVoiceManager.Instance.HideVoiceToolkit();
+            if (isListeningForVoiceCommand && voiceCommandField != null)
+            {
+                isListeningForVoiceCommand = false;
+                ShowKeyBoard(voiceCommandField);
+            }
+            voiceCommandField = null;
+        }
+
+        private void OnSpeechResult(string command, long timestamp)
+        {
+            JMRVoiceManager.Instance.HideVoiceToolkit();
+            if (isListeningForVoiceCommand && voiceCommandField != null)
+            {
+                prevText = suggestedText.text = command;
+                voiceCommandField.Text = cachedTex + suggestedText.text;
+                isListeningForVoiceCommand = false;
+                HideKeyBoard(false,false,true);
+            }
+            voiceCommandField = null;
         }
 
         /// <summary>

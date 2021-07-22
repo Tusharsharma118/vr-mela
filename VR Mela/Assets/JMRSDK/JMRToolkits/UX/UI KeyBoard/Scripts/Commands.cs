@@ -15,6 +15,8 @@ namespace JMRSDK.Toolkit.UI
 		public const string SPECIAL_CHARACTERS = "SPECIAL_CHARACTERS";
 		public const string ALPHABETS = "ALPHABETS";
 		public const string SEARCH = "SEARCH";
+		public const string NEWLINE = "NEWLINE";
+		public const string VOICECOMMAND = "VOICECOMMAND";
 
 		public static string SearchString;
 

@@ -45,7 +45,7 @@ namespace JMRSDK.Toolkit.UI
         private const string PrefabGUID = "a2b79847880d7884693bc4957ba3a0c4";
         private static string PrefabPath => AssetDatabase.GUIDToAssetPath(PrefabGUID);
 
-        [MenuItem("JioMixedReality/UI/Canvas", false, 2)]
+        [MenuItem("JioMixedReality/Toolkits/Common/Canvas", false, 2)]
         static void InstantiatePrefab()
         {
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(PrefabPath, typeof(GameObject));

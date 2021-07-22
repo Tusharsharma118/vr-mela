@@ -3,6 +3,8 @@
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using JMRSDK;
+using JMRSDK.InputModule;
 using System.Collections;
 
 namespace JMRSDK.InputModule

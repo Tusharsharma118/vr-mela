@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b3333efb1bbba4394a9ed708e4d459, type: 3}
   m_Name: Unicorn
   m_EditorClassIdentifier: 
-  reward: {fileID: 919132149155446097, guid: 5359d946a9c9549429331c11ac2ae91e, type: 3}
+  reward: {fileID: 919132149155446097, guid: 2b8bb2cc47c95104cbd14b5d8df730c4, type: 3}
   cost: 5500
   name: Unicorn
   isBought: 0

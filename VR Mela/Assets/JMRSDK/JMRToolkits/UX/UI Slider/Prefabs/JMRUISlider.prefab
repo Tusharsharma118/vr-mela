@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.95686275, g: 0.9490196, b: 0.9490196, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.011764706, g: 0, b: 0.49803922, a: 1}
+  m_Color: {r: 0.2, g: 0.2, b: 1, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.011764706, g: 0, b: 0.49803922, a: 1}
+  m_Color: {r: 0.2, g: 0.2, b: 1, a: 1}
   m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -486,8 +486,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 867bb1632d926bd40a52c0f89b7f00dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactable: 1
+  global: 0
+  showAppearAnimation: 1
   j_StepOffset: 1
   j_SwipeDelay: 0.125
+  supportStep: 0
   OnSwipe:
     m_PersistentCalls:
       m_Calls: []

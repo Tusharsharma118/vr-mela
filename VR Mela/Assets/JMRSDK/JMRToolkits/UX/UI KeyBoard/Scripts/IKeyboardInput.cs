@@ -10,6 +10,7 @@ namespace JMRSDK.Toolkit.UI
         Transform j_KeyboardPosition { get; set; }
         void HandleKeyboardEnterKey();
         void OnDeselect();
+        bool isMultiLineSupported();
 
         void EditEnd();
     }

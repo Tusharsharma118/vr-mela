@@ -16,7 +16,7 @@ namespace JMRSDK.Toolkit.UI
     /// <summary>
     /// Editable text input field.
     /// </summary>
-    public class JMRSearchField : MonoBehaviour, UnityEngine.EventSystems.ISelectHandler, 
+    public class JMRSearchField : MonoBehaviour, UnityEngine.EventSystems.ISelectHandler,
         IUpdateSelectedHandler,
         IBeginDragHandler,
         IDragHandler,
@@ -353,24 +353,9 @@ namespace JMRSDK.Toolkit.UI
 
         public Color SelectionColor { get { return selectionColor; } set { if (SetPropertyUtility.SetColor(ref selectionColor, value)) MarkGeometryAsDirty(); } }
 
-        public SubmitEvent OnEndEdit { get { return endEdit; } set { SetPropertyUtility.SetClass(ref endEdit, value); } }
 
-        public SubmitEvent Submit { get { return submit; } set { SetPropertyUtility.SetClass(ref submit, value); } }
-
-        public SelectionEvent Select { get { return select; } set { SetPropertyUtility.SetClass(ref select, value); } }
-
-        public SelectionEvent Deselect { get { return deselect; } set { SetPropertyUtility.SetClass(ref deselect, value); } }
-
-        public TextSelectionEvent OnTextSelection { get { return textSelection; } set { SetPropertyUtility.SetClass(ref textSelection, value); } }
-
-        public TextSelectionEvent OnEndTextSelection { get { return endTextSelection; } set { SetPropertyUtility.SetClass(ref endTextSelection, value); } }
-
-        public OnChangeEvent OnValueChanged { get { return valueChanged; } set { SetPropertyUtility.SetClass(ref valueChanged, value); } }
-
-        public TouchScreenKeyboardEvent OnTouchScreenKeyboardStatusChanged { get { return touchScreenKeyboardStatusChanged; } set { SetPropertyUtility.SetClass(ref touchScreenKeyboardStatusChanged, value); } }
-
+        private TouchScreenKeyboardEvent OnTouchScreenKeyboardStatusChanged { get { return touchScreenKeyboardStatusChanged; } set { SetPropertyUtility.SetClass(ref touchScreenKeyboardStatusChanged, value); } }
         public OnValidateInput ValidateInput { get { return validateInput; } set { SetPropertyUtility.SetClass(ref validateInput, value); } }
-
         public int CharacterLimit
         {
             get { return characterLimit; }
@@ -637,140 +622,156 @@ namespace JMRSDK.Toolkit.UI
         [SerializeField]
         protected Graphic placeholder;
 
-        [SerializeField]
+        public bool supportMultiLine = false;
+
+        //[SerializeField]
         protected Scrollbar verticalScrollbar;
 
-        [SerializeField]
+        //[SerializeField]
         protected TMP_ScrollbarEventHandler verticalScrollbarEventHandler;
         public Transform j_KeyboardPosition { get => KeyboardSpawnPoint; set => KeyboardSpawnPoint = value; }
+
+        public SubmitEvent Submit { get; set; }
+        /// <summary>
+        /// Event delegates triggered when the input field submits its data.
+        /// </summary>
+        [SerializeField]
+        private SubmitEvent submit;
+
+        public OnChangeEvent ValueChanged { get; set; }
+        /// <summary>
+        /// Event delegates triggered when the input field changes its data.
+        /// </summary>
+        [SerializeField]
+        private OnChangeEvent valueChanged;
 
         /// <summary>
         /// 
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         protected float scrollSensitivity = 1.0f;
 
         //[SerializeField]
         //protected TMP_Text m_PlaceholderTextComponent;
 
-        [SerializeField]
+        //[SerializeField]
         private ContentType contentType = ContentType.Standard;
 
         /// <summary>
         /// Type of data expected by the input field.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private InputType inputType = InputType.Standard;
 
         /// <summary>
         /// The character used to hide text in password field.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private char asteriskChar = '*';
 
         /// <summary>
         /// Keyboard type applies to mobile keyboards that get shown.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private TouchScreenKeyboardType keyboardType = TouchScreenKeyboardType.Default;
 
-        [SerializeField]
-        private LineType lineType = LineType.SingleLine;
+        //[SerializeField]
+        private LineType lineType = LineType.MultiLineNewline;
 
         /// <summary>
         /// Should hide mobile input field part of the virtual keyboard.
         /// </summary>
-        [SerializeField]
-        private bool hideMobileInput = false;
+        //[SerializeField]
+        private bool hideMobileInput = true;
 
         /// <summary>
         /// Should hide soft / virtual keyboard.
         /// </summary>
-        [SerializeField]
-        private bool hideSoftKeyboard = false;
+        //[SerializeField]
+        private bool hideSoftKeyboard = true;
 
         /// <summary>
         /// What kind of validation to use with the input field's data.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private CharacterValidation characterValidation = CharacterValidation.None;
 
         /// <summary>
         /// The Regex expression used for validating the text input.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private string regexValue = string.Empty;
 
         /// <summary>
         /// The point sized used by the placeholder and input text object.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private float globalPointSize = 14;
 
         /// <summary>
         /// Maximum number of characters allowed before input no longer works.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private int characterLimit = 0;
 
         /// <summary>
         /// Event delegates triggered when the input field submits its data.
         /// </summary>
 
-        [SerializeField]
+        //[SerializeField]
         private Color caretColor = new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f);
 
-        [SerializeField]
+        //[SerializeField]
         private bool customCaretColor = false;
 
-        [SerializeField]
+        //[SerializeField]
         private Color selectionColor = new Color(168f / 255f, 206f / 255f, 255f / 255f, 192f / 255f);
 
         /// <summary>
         /// Text Text used to display the input's value.
         /// </summary>
-        [SerializeField]
-        [TextArea(5, 10)]
+        //[SerializeField]
+        //[TextArea(5, 10)]
         protected string text = string.Empty;
         string IKeyboardInput.Text { get => text; set => SetText(value); }
 
-        [SerializeField]
-        [Range(0f, 4f)]
+        //[SerializeField]
+        //[Range(0f, 4f)]
         private float caretBlinkRate = 0.85f;
 
-        [SerializeField]
-        [Range(1, 5)]
+        //[SerializeField]
+        //[Range(1, 5)]
         private int caretWidth = 1;
 
-        [SerializeField]
+        //[SerializeField]
         private bool readOnly = false;
 
-        [SerializeField]
+        //[SerializeField]
         private bool richText = true;
 
-        [SerializeField]
+        //[SerializeField]
         protected TMP_FontAsset globalFontAsset;
 
         /// <summary>
         /// Determines if the whole text will be selected when focused.
         /// </summary>
 
-        [SerializeField]
+        //[SerializeField]
         protected bool focusSelectAll = true;
 
-        [SerializeField]
+        //[SerializeField]
         protected bool resetOnDeActivation = true;
 
-        [SerializeField]
+        //[SerializeField]
         private bool restoreOriginalTextOnEscape = true;
 
-        [SerializeField]
+        //[SerializeField]
         protected bool richTextEditingAllowed = false;
 
-        [SerializeField]
+        //[SerializeField]
         protected int lineLimit = 0;
 
-        [SerializeField]
+        //[SerializeField]
         protected TMP_InputValidator inputValidator = null;
         #endregion
 
@@ -797,34 +798,29 @@ namespace JMRSDK.Toolkit.UI
         [Serializable]
         public class OnChangeEvent : UnityEvent<string> { }
 
-        [Serializable]
+        //[Serializable]
         public class SelectionEvent : UnityEvent<string> { }
 
-        [Serializable]
+        //[Serializable]
         public class TextSelectionEvent : UnityEvent<string, int, int> { }
 
-        [Serializable]
+        //[Serializable]
         public class TouchScreenKeyboardEvent : UnityEvent<TouchScreenKeyboard.Status> { }
 
-        [SerializeField]
+        //[SerializeField]
         private SubmitEvent endEdit = new SubmitEvent();
 
-        /// <summary>
-        /// Event delegates triggered when the input field submits its data.
-        /// </summary>
-        [SerializeField]
-        private SubmitEvent submit = new SubmitEvent();
 
         /// <summary>
         /// Event delegates triggered when the input field is focused.
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         private SelectionEvent select = new SelectionEvent();
 
         /// <summary>
         /// Event delegates triggered when the input field focus is lost.
         /// </summary>
-        [SerializeField]
+       //[SerializeField]
         private SelectionEvent deselect = new SelectionEvent();
 
         /// <summary>
@@ -839,11 +835,6 @@ namespace JMRSDK.Toolkit.UI
         //[SerializeField]
         private TextSelectionEvent endTextSelection = new TextSelectionEvent();
 
-        /// <summary>
-        /// Event delegates triggered when the input field changes its data.
-        /// </summary>
-        [SerializeField]
-        private OnChangeEvent valueChanged = new OnChangeEvent();
 
         /// <summary>
         /// Event delegates triggered when the status of the TouchScreenKeyboard changes.
@@ -904,7 +895,7 @@ namespace JMRSDK.Toolkit.UI
         static private readonly char[] j_KSeparators = { ' ', '.', ',', '\t', '\r', '\n' };
         // Doesn't include dot and @ on purpose! See usage for details.
         const string j_KEmailSpecialCharacters = "!#$%&'*+-/=?^_`{|}~";
-        private JMRInteractable currentInteractable;
+
         #endregion
 
         #region CONSTRUCTOR
@@ -938,17 +929,18 @@ namespace JMRSDK.Toolkit.UI
         }
 #endif
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             //Debug.Log("*** OnEnable() *** - " + this.name);
 
-            //  base.OnEnable();
-
-            if (GetComponent<JMRInteractable>() != null)
+            if (Submit == null)
             {
-                currentInteractable = GetComponent<JMRInteractable>();
+                Submit = new SubmitEvent();
             }
-
+            if (ValueChanged == null)
+            {
+                ValueChanged = new OnChangeEvent();
+            }
             if (text == null)
                 text = string.Empty;
 
@@ -1008,12 +1000,12 @@ namespace JMRSDK.Toolkit.UI
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
         }
 
-        private void OnDisable()
+        protected void OnDisable()
         {
-            // the coroutine will be terminated, so this will ensure it restarts when we are next activated
+
             j_BlinkCoroutine = null;
 
-            DeactivateSearchField();
+            DeactivateInputField();
             if (textComponent != null)
             {
                 textComponent.UnregisterDirtyVerticesCallback(MarkGeometryAsDirty);
@@ -1047,12 +1039,13 @@ namespace JMRSDK.Toolkit.UI
         {
             if (!InteractableActive())
                 return;
+
             // Only activate if we are not already activated.
             if (j_ShouldActivateNextUpdate)
             {
                 if (!Focused)
                 {
-                    ActivateSearchFieldInternal();
+                    ActivateInputFieldInternal();
                     j_ShouldActivateNextUpdate = false;
                     return;
                 }
@@ -1067,61 +1060,6 @@ namespace JMRSDK.Toolkit.UI
                 UpdateScrollbar();
                 j_ScrollbarUpdateRequired = false;
             }
-
-            // Handle double click to reset / deselect Input Field when ResetOnActivation is false.
-            //if (!Focused && j_SelectionStillActive)
-            //{
-            //    GameObject selectedObject = EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null;
-
-            //    if (selectedObject != null && selectedObject != this.gameObject)
-            //    {
-            //        if (selectedObject != j_SelectedObject)
-            //        {
-            //            j_SelectedObject = selectedObject;
-
-            //            // Check if object has a TMP Input Field
-            //            if (selectedObject.GetComponent<TMP_InputField>() != null)
-            //            {
-            //                // Release selection
-            //                j_SelectionStillActive = false;
-            //                MarkGeometryAsDirty();
-            //                j_SelectedObject = null;
-            //            }
-            //        }
-
-            //        return;
-            //    }
-
-            //    //if (UnityEngine.Input.GetKeyDown(KeyCode.Mouse0))
-            //    //{
-            //    //    // Check for Double Click
-            //    //    bool isDoubleClick = false;
-            //    //    float timeStamp = Time.unscaledTime;
-
-            //    //    if (j_KeyDownStartTime + j_DoubleClickDelay > timeStamp)
-            //    //        isDoubleClick = true;
-
-            //    //    j_KeyDownStartTime = timeStamp;
-
-            //    //    if (isDoubleClick)
-            //    //    {
-            //    //        //m_StringPosition = m_StringSelectPosition = 0;
-            //    //        //m_CaretPosition = m_CaretSelectPosition = 0;
-            //    //        //m_TextComponent.rectTransform.localPosition = m_DefaultTransformPosition;
-
-            //    //        //if (caretRectTrans != null)
-            //    //        //    caretRectTrans.localPosition = Vector3.zero;
-
-            //    //        j_SelectionStillActive = false;
-
-            //    //        MarkGeometryAsDirty();
-
-            //    //        return;
-            //    //    }
-            //    //}
-            //}
-
-
             if (hideMobileInput)
             {
                 j_CaretPositionInternal = j_CaretSelectPositionInternal = GetCaretPositionFromStringIndex(Text.Length);
@@ -1164,6 +1102,7 @@ namespace JMRSDK.Toolkit.UI
             }
 
             string val = j_SoftKeyboard.text;
+
 
             if (text != val)
             {
@@ -1244,19 +1183,11 @@ namespace JMRSDK.Toolkit.UI
         /// <summary>
         /// Set Input field's current text value without invoke onValueChanged. This is not necessarily the same as what is visible on screen.
         /// </summary>
-        /// <param name="input"></param>
         public void SetTextWithoutNotify(string input)
         {
             SetText(input, false);
         }
 
-        /// <summary>
-        /// Search Submit.
-        /// </summary>
-        public void OnSearchSubmit()
-        {
-            SendOnSubmit();
-        }
 
         /// <summary>
         /// Move to the end of the text.
@@ -1405,6 +1336,7 @@ namespace JMRSDK.Toolkit.UI
         {
             if (!InteractableActive())
                 return;
+
             if (!MayDrag(eventData))
                 return;
 
@@ -1466,6 +1398,7 @@ namespace JMRSDK.Toolkit.UI
         {
             if (!InteractableActive())
                 return;
+
             if (!MayDrag(eventData))
                 return;
 
@@ -1484,14 +1417,14 @@ namespace JMRSDK.Toolkit.UI
             bool hadFocusBefore = j_AllowInput;
             //base.OnPointerDown(eventData);
 
-            if (InPlaceEditing() == false)
-            {
-                if (j_SoftKeyboard == null || !j_SoftKeyboard.active)
-                {
-                    OnSelect(eventData);
-                    return;
-                }
-            }
+            //if (InPlaceEditing() == false)
+            //{
+            //    if (j_SoftKeyboard == null || !j_SoftKeyboard.active)
+            //    {
+            //        OnSelect(eventData);
+            //        return;
+            //    }
+            //}
 
             bool shift = UnityEngine.Input.GetKey(KeyCode.LeftShift) || UnityEngine.Input.GetKey(KeyCode.RightShift);
 
@@ -1637,7 +1570,7 @@ namespace JMRSDK.Toolkit.UI
                     if (shouldContinue == EditState.Finish)
                     {
                         SendOnSubmit();
-                        DeactivateSearchField();
+                        DeactivateInputField();
                         break;
                     }
                 }
@@ -1671,6 +1604,7 @@ namespace JMRSDK.Toolkit.UI
         {
             if (!InteractableActive())
                 return;
+
             if (textComponent.preferredHeight < TextViewport.rect.height) return;
 
             float scrollDirection = -eventData.scrollDelta.y;
@@ -1718,7 +1652,7 @@ namespace JMRSDK.Toolkit.UI
         public void GraphicUpdateComplete()
         { }
 
-        public void ActivateSearchField()
+        public void ActivateInputField()
         {
             if (!InteractableActive())
                 return;
@@ -1742,12 +1676,11 @@ namespace JMRSDK.Toolkit.UI
         {
             if (!InteractableActive())
                 return;
-            //Debug.Log("OnSelect()");
 
             //base.OnSelect(eventData);
             SendOnFocus();
 
-            ActivateSearchField();
+            ActivateInputField();
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -1756,42 +1689,41 @@ namespace JMRSDK.Toolkit.UI
                 return;
             //Debug.Log("Pointer Click Event...");
 
-            if (true)//Bhumit
+            if (JMRVirtualKeyBoard.Instance)
             {
-                if (JMRVirtualKeyBoard.Instance)
-                    JMRVirtualKeyBoard.Instance.ShowKeyBoard(this);
-                else
+                if (eventData.selectedObject != null && eventData.selectedObject.tag == "Search")
                 {
-                    if (!JMRKeyboardSpawner.Instance.SpawnKeyboard(this))
-                        Debug.LogError("Cant find keyboard prefab");
+                    return;
                 }
-
-
+                JMRVirtualKeyBoard.Instance.ShowKeyBoard(this);
+            }
+            else
+            {
+                if (!JMRKeyboardSpawner.Instance.SpawnKeyboard(this))
+                    Debug.LogError("Cant find keyboard prefab");
             }
 
             if (eventData.button != PointerEventData.InputButton.Left)
                 return;
 
-            ActivateSearchField();
+            ActivateInputField();
         }
 
         public void OnControlClick()
         {
-            if (!InteractableActive())
-                return;
             //Debug.Log("Input Field control click...");
         }
 
         public void ReleaseSelection()
         {
-            if (!InteractableActive())
-                return;
             j_SelectionStillActive = false;
             MarkGeometryAsDirty();
         }
 
-        public void DeactivateSearchField(bool clearSelection = false)
+        public void DeactivateInputField(bool clearSelection = false)
         {
+            if (!InteractableActive())
+                return;
             //Debug.Log("Deactivate Input Field...");
 
             // Not activated do nothing.
@@ -1841,14 +1773,6 @@ namespace JMRSDK.Toolkit.UI
 
             // Scrollbar should be updated.
             j_ScrollbarUpdateRequired = true;
-        }
-
-        public void OnDeselect()
-        {
-            DeactivateSearchField();
-
-            //base.OnDeselect(eventData);
-            SendOnFocusLost();
         }
 
         public virtual void OnSubmit(BaseEventData eventData)
@@ -1909,7 +1833,6 @@ namespace JMRSDK.Toolkit.UI
             return false;
         }
 
-
         #endregion
 
         #region DEFAULT METHODS
@@ -1925,13 +1848,12 @@ namespace JMRSDK.Toolkit.UI
 
             text = value;
 
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (Application.isEditor && !Application.isPlaying)
             {
                 SendOnValueChangedAndUpdateLabel();
                 return;
             }
-#endif
+
 
             if (j_SoftKeyboard != null)
                 j_SoftKeyboard.text = text;
@@ -1950,7 +1872,7 @@ namespace JMRSDK.Toolkit.UI
             UpdateLabel();
 
             if (sendCallback)
-                SendOnValueChanged();
+                SendDynamicValueChange(Text);
         }
 
         void SetCaretVisible()
@@ -2138,13 +2060,7 @@ namespace JMRSDK.Toolkit.UI
 
         private bool InteractableActive()
         {
-            bool status = true;
-            if (currentInteractable != null)
-            {
-                if (!currentInteractable.IsEnabled)
-                    status = false;
-            }
-            return status;
+            return GetComponent<JMRInteractable>().IsEnabled;
         }
 
 
@@ -2995,6 +2911,8 @@ namespace JMRSDK.Toolkit.UI
 
         private void SendOnValueChangedAndUpdateLabel()
         {
+            if (!InteractableActive())
+                return;
             UpdateLabel();
             SendOnValueChanged();
         }
@@ -3003,8 +2921,8 @@ namespace JMRSDK.Toolkit.UI
         {
             if (!InteractableActive())
                 return;
-            if (OnValueChanged != null)
-                OnValueChanged.Invoke(Text);
+            if (ValueChanged != null)
+                valueChanged.Invoke(Text);
         }
 
 
@@ -3089,10 +3007,8 @@ namespace JMRSDK.Toolkit.UI
 
         private void UpdateGeometry()
         {
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
+            if (Application.isEditor && !Application.isPlaying)
                 return;
-#endif
 
             // No need to draw a cursor on mobile as its handled by the devices keyboard.
             if (InPlaceEditing() == false)
@@ -3177,7 +3093,7 @@ namespace JMRSDK.Toolkit.UI
             }
         }
 
-
+        int first = 0;
         private void GenerateCaret(VertexHelper vbo, Vector2 roundingOffset)
         {
             if (!j_CaretVisible)
@@ -3214,6 +3130,7 @@ namespace JMRSDK.Toolkit.UI
 
             if (j_SoftKeyboard != null)
                 j_SoftKeyboard.selection = new RangeInt(j_StringPositionInternal, 0);
+
 
             // Adjust the position of the RectTransform based on the caret position in the viewport (only if we have focus).
             if (Focused && startPosition != j_LastPosition || j_ForceRectTransformAdjustment)
@@ -3461,10 +3378,8 @@ namespace JMRSDK.Toolkit.UI
             j_ForceRectTransformAdjustment = false;
         }
 
-        private void ActivateSearchFieldInternal()
+        private void ActivateInputFieldInternal()
         {
-            if (!InteractableActive())
-                return;
             if (EventSystem.current == null)
                 return;
 
@@ -3530,8 +3445,6 @@ namespace JMRSDK.Toolkit.UI
         /// <param name="newText"></param>
         private void Keyboard_OnTextUpdated(string newText)
         {
-            if (!InteractableActive())
-                return;
             Text = newText;
         }
 
@@ -3541,8 +3454,6 @@ namespace JMRSDK.Toolkit.UI
         /// <param name="sender"></param>
         private void Keyboard_OnClosed(object sender, EventArgs e)
         {
-            if (!InteractableActive())
-                return;
             // Unsubscribe from delegate functions
         }
 
@@ -3902,52 +3813,91 @@ namespace JMRSDK.Toolkit.UI
         /// Submit the input field's text.
         /// </summary>
 
+        public void HandleKeyboardEnterKey()
+        {
+        }
+
+        public void OnSearchButtonClick()
+        {
+            if (JMRVirtualKeyBoard.Instance != null && JMRVirtualKeyBoard.Instance.gameObject.activeInHierarchy)
+            {
+                JMRVirtualKeyBoard.Instance.HideKeyBoard();
+            }
+        }
+
+        public void EditEnd()
+        {
+            if (!InteractableActive())
+                return;
+
+            SendDynamicSubmit(Text);
+        }
+
+        public void OnTextChanged()
+        {
+            if (!InteractableActive())
+                return;
+
+            ValueChanged?.Invoke(Text);
+            valueChanged?.Invoke(Text);
+        }
+
+        public void OnDeselect()
+        {
+            if (!InteractableActive())
+                return;
+
+            DeactivateInputField();
+
+            //base.OnDeselect(eventData);
+            SendOnFocusLost();
+        }
+
         protected void SendOnEndEdit()
         {
             if (!InteractableActive())
                 return;
-            if (OnEndEdit != null)
-                OnEndEdit.Invoke(text);
         }
 
         protected void SendOnSubmit()
         {
             if (!InteractableActive())
                 return;
-            if (Submit != null)
-                SetDynamicSubmit(text);
+            SendDynamicSubmit(Text);
         }
-
-        public void SendOnSearchSubmit()
+        private void SendDynamicSubmit(string typedText)
         {
-            if (!InteractableActive())
-                return;
-            if (!string.IsNullOrEmpty(text) && Submit != null)
-                Submit.Invoke(text);
-        }
-
-        private void SetDynamicSubmit(string value)
-        {
-            for (int i = 0; i < Submit.GetPersistentEventCount(); i++)
+            if (submit != null)
             {
-                ((MonoBehaviour)Submit.GetPersistentTarget(i)).SendMessage(Submit.GetPersistentMethodName(i), value);
+                for (int i = 0; i < submit.GetPersistentEventCount(); i++)
+                {
+                    ((MonoBehaviour)submit.GetPersistentTarget(i)).SendMessage(submit.GetPersistentMethodName(i), typedText);
+                }
             }
+            Submit?.Invoke(typedText);
+        }
+        private void SendDynamicValueChange(string typedText)
+        {
+            if (valueChanged != null)
+            {
+                for (int i = 0; i < valueChanged.GetPersistentEventCount(); i++)
+                {
+                    ((MonoBehaviour)valueChanged.GetPersistentTarget(i)).SendMessage(valueChanged.GetPersistentMethodName(i), typedText);
+                }
+            }
+            ValueChanged?.Invoke(typedText);
         }
 
         protected void SendOnFocus()
         {
             if (!InteractableActive())
                 return;
-            if (Select != null)
-                Select.Invoke(text);
         }
 
         protected void SendOnFocusLost()
         {
             if (!InteractableActive())
                 return;
-            if (Deselect != null)
-                Deselect.Invoke(text);
         }
 
         protected void SendOnTextSelection()
@@ -3956,8 +3906,6 @@ namespace JMRSDK.Toolkit.UI
                 return;
             j_Selected = true;
 
-            if (OnTextSelection != null)
-                OnTextSelection.Invoke(text, j_StringPositionInternal, j_StringSelectPositionInternal);
         }
 
         protected void SendOnEndTextSelection()
@@ -3965,9 +3913,6 @@ namespace JMRSDK.Toolkit.UI
             if (!InteractableActive())
                 return;
             if (!j_Selected) return;
-
-            if (OnEndTextSelection != null)
-                OnEndTextSelection.Invoke(text, j_StringPositionInternal, j_StringSelectPositionInternal);
 
             j_Selected = false;
         }
@@ -4230,17 +4175,9 @@ namespace JMRSDK.Toolkit.UI
             j_DragCoroutine = null;
         }
 
-        public void HandleKeyboardEnterKey()
+        public bool isMultiLineSupported()
         {
-            SendOnSubmit();
-        }
-
-        public void EditEnd()
-        {
-            if (!InteractableActive())
-                return;
-            if (OnEndEdit != null)
-                OnEndEdit.Invoke(text);
+            return supportMultiLine;
         }
         #endregion
 

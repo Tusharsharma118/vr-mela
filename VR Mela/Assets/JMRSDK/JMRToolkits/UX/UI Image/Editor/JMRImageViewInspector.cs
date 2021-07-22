@@ -16,7 +16,7 @@ namespace JMRSDK.Toolkit.UI.Inspector
         const string PrefabGUID = "a407aeee4e10cfa429cab1877af1db6c";
         private static string PrefabPath => AssetDatabase.GUIDToAssetPath(PrefabGUID);
 
-        [MenuItem("JioMixedReality/UI/Image View")]
+        [MenuItem("JioMixedReality/Toolkits/Common/Image View")]
         static void InstantiatePrefab()
         {
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(PrefabPath, typeof(GameObject));

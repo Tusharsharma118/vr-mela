@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 1413824352, guid: 39673d13616f37540b9d9521295b12b9, type: 3}
   m_Name: SO_ControllerPositions
   m_EditorClassIdentifier: 
-  universal: {x: 0.3, y: -0.5, z: -0.02}
-  leftHand: {x: -0.3, y: -0.5, z: -0.02}
-  rightHand: {x: 0.3, y: -0.5, z: -0.02}
+  universal: {x: 0.15, y: -0.42, z: 0.2}
+  leftHand: {x: -0.15, y: -0.42, z: 0.2}
+  rightHand: {x: 0.15, y: -0.42, z: 0.2}

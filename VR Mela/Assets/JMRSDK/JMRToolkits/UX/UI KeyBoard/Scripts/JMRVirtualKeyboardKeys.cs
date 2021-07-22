@@ -78,7 +78,7 @@ namespace JMRSDK.Toolkit.UI
                         break;
                 }
             }
-            if (highlightText != null)
+            if (highlightText != null) 
                 highlightText.text = keyText.text;
         }
 
@@ -90,11 +90,20 @@ namespace JMRSDK.Toolkit.UI
         {
         }
 
+        private void RestTriggers()
+        {
+            j_animator.ResetTrigger("Pressed");
+            j_animator.ResetTrigger("Default");
+            j_animator.ResetTrigger("Hover");
+
+        }
+
         /// <summary>
         /// Handle Focus Enter From Inputmodule.
         /// </summary>
         public void OnFocusEnter()
         {
+            RestTriggers();
             j_timer = 0;
             j_animator.SetTrigger("Hover");
         }
@@ -104,11 +113,14 @@ namespace JMRSDK.Toolkit.UI
         /// </summary>
         public void OnFocusExit()
         {
-            j_timer = 0.35f;
+            RestTriggers();
+            j_timer = 0f;
+            j_animator.SetTrigger("Default");
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            RestTriggers();
             string res = isAction ? content : keyText.text;
             keyBoard.HandleMessage(res);
             j_animator.SetTrigger("Pressed");

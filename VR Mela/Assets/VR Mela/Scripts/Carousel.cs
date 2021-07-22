@@ -53,6 +53,12 @@ public class Carousel : MonoBehaviour
         { //loop through the objects
             GameObject ob = Instantiate(rewards[i].reward,this.transform,false);
             ob.transform.position = this.transform.position;//Reset objects to the postion of the carousel center
+            //disable shadows for the gameObject
+            Renderer renderer = ob.transform.GetComponent<Renderer>();
+            if(renderer != null)
+            {
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            }
             //ob.transform.rotation = Quaternion.identity; //make sure their rotation is zero
             ob.transform.parent = this.transform; // make the element child to the carousel center
             ob.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z + DistanceFromCenter);//move each carousel item from the center an amount of "DistanceFromCenter"
@@ -224,6 +230,9 @@ public class Carousel : MonoBehaviour
             populateTicketsInScene();
             //save current ticket count and Object Stats to device storage
             GameObject.FindGameObjectWithTag("GameManager").GetComponent<GamesManager>().SaveGame();
+            // add popup here for item bough sucessfully  and update the plate below
+            updatePricePlate();
+            StartCoroutine(alertSuccesfullyBought());
         }
         else {
                 StartCoroutine(alertNotEnoughCurrency());
@@ -245,7 +254,17 @@ public class Carousel : MonoBehaviour
         bankruptAlertView.SetActive(true);
         TextMeshProUGUI textView = bankruptAlertView.GetComponentInChildren<TextMeshProUGUI>();
         textView.text = "Reward Already Bought!!";
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3f);
+        bankruptAlertView.SetActive(false);
+    }
+
+    private IEnumerator alertSuccesfullyBought()
+    {
+        Debug.Log("Started Coroutine Successfully Bought, GameObjectName" + bankruptAlertView.name);
+        bankruptAlertView.SetActive(true);
+        TextMeshProUGUI textView = bankruptAlertView.GetComponentInChildren<TextMeshProUGUI>();
+        textView.text = "You now own "+ rewards[ChosenObject].name + "!! it's in your Zone!!";
+        yield return new WaitForSeconds(3f);
         bankruptAlertView.SetActive(false);
     }
 }

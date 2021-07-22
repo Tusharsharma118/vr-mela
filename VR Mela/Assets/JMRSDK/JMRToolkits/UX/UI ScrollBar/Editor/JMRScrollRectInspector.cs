@@ -17,7 +17,7 @@ namespace JMRSDK.Toolkit.UI.Inspector
         const string VerticalPrefabGUID = "0ee7360b1769f1b4fbd52de191c5bd06";
         private static string VerticalPrefabPath => AssetDatabase.GUIDToAssetPath(VerticalPrefabGUID);
 
-        [MenuItem("JioMixedReality/UI/Horizontal Scroll")]
+        [MenuItem("JioMixedReality/Toolkits/Common/Horizontal Scroll")]
         static void InstantiateHorizontalPrefab()
         {
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(HorizontalPrefabPath, typeof(GameObject));
@@ -45,7 +45,7 @@ namespace JMRSDK.Toolkit.UI.Inspector
             }
         }
 
-        [MenuItem("JioMixedReality/UI/Vertical Scroll")]
+        [MenuItem("JioMixedReality/Toolkits/Common/Vertical Scroll")]
         static void InstantiateVerticalPrefab()
         {
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(VerticalPrefabPath, typeof(GameObject));

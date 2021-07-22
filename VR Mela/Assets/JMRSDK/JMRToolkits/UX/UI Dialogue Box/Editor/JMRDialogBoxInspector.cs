@@ -20,7 +20,7 @@ namespace JMRSDK.Toolkit.UI.Inspector
         private static string ErrorDialogPrefabPath => AssetDatabase.GUIDToAssetPath(ErrorDialogPrefabGUID);
 
 
-        [MenuItem("JioMixedReality/UI/DialogBox")]
+        [MenuItem("JioMixedReality/Toolkits/V1/DialogBox")]
         static void InstantiateHorizontalPrefab()
         {
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(DialogPrefabPath, typeof(GameObject));
@@ -48,7 +48,7 @@ namespace JMRSDK.Toolkit.UI.Inspector
             }
         }
 
-        [MenuItem("JioMixedReality/UI/Error DialogBox")]
+        [MenuItem("JioMixedReality/Toolkits/V1/Error DialogBox")]
         static void InstantiateVerticalPrefab()
         {
             GameObject prefab = (GameObject)AssetDatabase.LoadAssetAtPath(ErrorDialogPrefabPath, typeof(GameObject));
